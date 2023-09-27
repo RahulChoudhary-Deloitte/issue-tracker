@@ -1,14 +1,22 @@
 import './App.css';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import CreateProject from './components/CreateProject';
-import CreateIssue from './components/CreateIssue';
-import Sidebar from './components/Sidebar';
-import ProjectDetails from './pages/ProjectDetails';
-import Navbar from './components/Navbar';
-import IssueDetails from './pages/IssueDetails';
-import Insights from './pages/Insights';
 
+import {
+  CreateIssue,
+  CreateProject,
+  Sidebar,
+  Navbar,
+
+  
+} from './components'
+
+import {
+  ProjectDetails,
+  Insights,
+  IssueDetails
+  }
+   from './pages'
 function Dashboard() {
   return (
     <div className="app-container">

@@ -2,14 +2,14 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "@clayui/css/lib/css/atlas.css";
-import "../styles/CreateProject.scss";
-import SelectField from "./SelectField";
-import projectApi from "./apis/projectApi";
+import "./style.scss";
+import SelectField from "../SelectField";
+import projectApi from "../apis/projectApi";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   getAllProject,
-} from "../store/slices/projectSlice";
+} from "../../store/slices/projectSlice";
 
 
 

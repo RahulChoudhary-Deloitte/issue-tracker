@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
-import '../styles/Navbar.css'
-import UserCard from './UserCard';
+import './style.scss'
+import UserCard from  '../UserCard';
 
 const Navbar = () => {
 

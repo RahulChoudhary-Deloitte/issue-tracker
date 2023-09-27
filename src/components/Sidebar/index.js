@@ -1,12 +1,12 @@
-import '../styles/Sidebar.scss'
+import './style.scss'
 import React, { useState } from "react";
-import logo from '../assets/logo.png'
+import logo from '../../assets/logo.png'
 import ClayNav from '@clayui/nav';
 
 import ClayNavigationBar from "@clayui/navigation-bar";
 
 import { Link } from 'react-router-dom'
-import UserCard from './UserCard';
+import UserCard from '../UserCard';
 
 
 const Sidebar = () => {

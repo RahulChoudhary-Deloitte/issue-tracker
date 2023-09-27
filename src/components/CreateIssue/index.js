@@ -3,17 +3,11 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import "@clayui/css/lib/css/atlas.css";
-import "../styles/CreateIssue.scss";
-import SelectField from "./SelectField"; 
-import projectApi from "./apis/projectApi";
-import {  useSelector } from "react-redux";
-import {
-  getAllProject,
- 
-} from "../store/slices/projectSlice";
-
-
-
+import './style.scss'
+import SelectField  from '../SelectField'
+import projectApi from "../apis/projectApi";
+import { useSelector } from "react-redux";
+import { getAllProject } from "../../store/slices/projectSlice";
 
 const validationSchema = Yup.object().shape({
   summary: Yup.string().required("Summary is required"),
@@ -29,7 +23,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const CreateIssue = () => {
-
   const history = useHistory();
   const initialValues = {
     summary: "",
@@ -48,21 +41,18 @@ const CreateIssue = () => {
     { label: "Story", value: "3" },
   ];
 
-
   const projects = useSelector(getAllProject).allProject;
-  const teamMembers = useSelector(getAllProject).teamMembers
+  const teamMembers = useSelector(getAllProject).teamMembers;
 
   const assigneeOptions = teamMembers.map((member) => ({
-    
-    label: member.name, 
-    value: member.id,   
+    label: member.name,
+    value: member.id,
   }));
 
   const projectOptions = projects.map((project) => ({
     label: project.projectName,
     value: project.projectID,
   }));
-
 
   const priorityOptions = [
     { label: "High", value: "1" },
@@ -76,7 +66,6 @@ const CreateIssue = () => {
     { label: "Sprint 3", value: "Sprint 3" },
   ];
 
-
   const tagOptions = [
     { label: "HU-22", value: "HU-22" },
     { label: "Angular track", value: "Angular track" },
@@ -86,35 +75,26 @@ const CreateIssue = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-
-
-
       const projectData = {
         summary: values.summary,
-        type: parseInt(values.type), 
-        projectID:values.project,
-        description:values.description,
-        priority:parseInt(values.priority),
-        status:1,
-        assignee:values.assignee,
-        tags:[values.tag],
-        sprint:values.sprint,
-        storyPoint:values.storyPoints
+        type: parseInt(values.type),
+        projectID: values.project,
+        description: values.description,
+        priority: parseInt(values.priority),
+        status: 1,
+        assignee: values.assignee,
+        tags: [values.tag],
+        sprint: values.sprint,
+        storyPoint: values.storyPoints,
       };
 
-  
-      const response = await projectApi.post(
-        "/issue",
-        projectData
-      );
-  
+      const response = await projectApi.post("/issue", projectData);
+
       console.log("Project created successfully:", response);
       resetForm({ values: initialValues });
-      history.push("/")
+      history.push("/");
     } catch (error) {
-      
-        console.error("Error creating project:", error);
-      
+      console.error("Error creating project:", error);
     }
   };
 
@@ -147,10 +127,13 @@ const CreateIssue = () => {
             </div>
 
             <div className="form-row">
-            <SelectField label="Type" name="type" options={typeOptions} />
-            <SelectField label="Project" name="project" options={projectOptions} />
+              <SelectField label="Type" name="type" options={typeOptions} />
+              <SelectField
+                label="Project"
+                name="project"
+                options={projectOptions}
+              />
             </div>
-           
 
             <div className="form-row">
               <div className="form-group col-md-12">
@@ -171,12 +154,24 @@ const CreateIssue = () => {
             </div>
 
             <div className="form-row">
-            <SelectField label="Priority" name="priority" options={priorityOptions} />
-            <SelectField label="Assignee" name="assignee" options={assigneeOptions} />
+              <SelectField
+                label="Priority"
+                name="priority"
+                options={priorityOptions}
+              />
+              <SelectField
+                label="Assignee"
+                name="assignee"
+                options={assigneeOptions}
+              />
             </div>
             <div className="form-row">
-            <SelectField label="Tag" name="tag" options={tagOptions} />
-            <SelectField label="Sprint" name="sprint" options={sprintOptions} />
+              <SelectField label="Tag" name="tag" options={tagOptions} />
+              <SelectField
+                label="Sprint"
+                name="sprint"
+                options={sprintOptions}
+              />
             </div>
             <div className="form-row">
               <div className="form-group col-md-6">

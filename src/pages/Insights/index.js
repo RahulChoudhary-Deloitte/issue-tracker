@@ -1,21 +1,34 @@
 import React from "react";
-import StatusBar from "../components/StatusBar";
-import TotalIssues from "../components/TotalIssues";
+// import StatusBar from "../components/StatusBar";
+// import  from "../components/TotalIssues";
+import {TotalIssues,StatusBar} from '../../components'
 import { useParams } from 'react-router-dom';
 import { useState ,useEffect} from "react";
-import projectApi from "../components/apis/projectApi";
+import projectApi from "../../components/apis/projectApi";
+import { useSelector } from "react-redux";
+import {
+  getAllProject,
+} from "../../store/slices/projectSlice";
 import './insights.scss'
+
+
+
 
 const Insights = () => {
   const { id } = useParams();
   
+  const teamMembers = useSelector(getAllProject).teamMembers
+  const projects   = useSelector(getAllProject).allProject
 
+  const selectedProject = projects.find((project) => project.projectID === id);
 
   const [items, setItems] = useState([]);
   let todoCount = 0;
   let developmentCount = 0;
   let testingCount = 0;
   let completedCount = 0;
+
+
   useEffect(() => {
     if (id) {
       const fetchCardData = async () => {
@@ -34,7 +47,6 @@ const Insights = () => {
 
 
   for (const item of items) {
-    console.log("item  --->  ", item.status)
     switch ((item.status)) {
       
       case 1:
@@ -54,10 +66,23 @@ const Insights = () => {
     }
   }
 
-  console.log("Todo Count:", todoCount);
-  console.log("Development Count:", developmentCount);
-  console.log("Testing Count:", testingCount);
-  console.log("Completed Count:", completedCount);
+  const teamMemberElements = teamMembers
+    .filter((member) => member.id !== selectedProject.projectOwner.id)
+    .map((member) => (
+      <div className="member-info" key={member.id}>
+        <div className="img">
+          <img
+            src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=2048x2048&w=is&k=20&c=lDJRQWb0FtKq9R8biMKvGGZVqn0sVGlUHDPoxR83nWc=" 
+            alt={member.name}
+          />
+          <div className="nenber-name">
+            <h1>{member.name}</h1>
+            <p>{member.desination}</p>
+          </div>
+        </div>
+        <p>Team Member</p>
+      </div>
+    ));
   
   return (
     <div className="insights">
@@ -66,7 +91,7 @@ const Insights = () => {
           <div className="title">
             <h1>HU 22.0 React Track</h1>
           </div>
-          <p>Total Number of Issues: 08</p>
+          <p>Total Number of Issues: {items.length}</p>
             <p className="hr"></p>
           <div className="issues-details">
       <TotalIssues title="TO DO" count={todoCount} className="todo" />
@@ -98,49 +123,20 @@ const Insights = () => {
       </div>
       <div className="right">
         <h1>Team Members</h1>
-        <p>9 member</p>
+        <p>{teamMembers.length} member</p>
         <div>
             <div className="member-info">
                 <div className="img">
                 <img src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=2048x2048&w=is&k=20&c=lDJRQWb0FtKq9R8biMKvGGZVqn0sVGlUHDPoxR83nWc=" alt="" />
                 <div className="nenber-name">
-                    <h1>Rahul Choudhary</h1>
-                    <p>Frontend Engineer</p>
+                    <h1>{selectedProject?.projectOwner?.name}</h1>
+                    <p>{selectedProject?.projectOwner?.desination} </p>
                 </div>
                 </div>
                 <p>Owner</p>
             </div>
             <hr />
-            <div className="member-info">
-                <div className="img">
-                <img src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=2048x2048&w=is&k=20&c=lDJRQWb0FtKq9R8biMKvGGZVqn0sVGlUHDPoxR83nWc=" alt="" />
-                <div className="nenber-name">
-                    <h1>Rahul Choudhary</h1>
-                    <p>Frontend Engineer</p>
-                </div>
-                </div>
-                <p>Owner</p>
-            </div>
-            <div className="member-info">
-                <div className="img">
-                <img src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=2048x2048&w=is&k=20&c=lDJRQWb0FtKq9R8biMKvGGZVqn0sVGlUHDPoxR83nWc=" alt="" />
-                <div className="nenber-name">
-                    <h1>Rahul Choudhary</h1>
-                    <p>Frontend Engineer</p>
-                </div>
-                </div>
-                <p>Owner</p>
-            </div>
-            <div className="member-info">
-                <div className="img">
-                <img src="https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.jpg?s=2048x2048&w=is&k=20&c=lDJRQWb0FtKq9R8biMKvGGZVqn0sVGlUHDPoxR83nWc=" alt="" />
-                <div className="nenber-name">
-                    <h1>Rahul Choudhary</h1>
-                    <p>Frontend Engineer</p>
-                </div>
-                </div>
-                <p>Owner</p>
-            </div>
+            <div>{teamMemberElements}</div>
         </div>
       </div>
     </div>
