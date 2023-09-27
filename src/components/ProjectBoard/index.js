@@ -42,7 +42,7 @@ const ProjectBoard = () => {
         console.log(err);
       });
       dispatch(setProjects(response.data));
-      dispatch(setSelectProject(response.data[0]));
+      dispatch(setSelectProject(response.data[1]));
     };
 
     fetchProjects();
@@ -96,7 +96,7 @@ const ProjectBoard = () => {
     const newSelectProject = projects.filter(
       (project) => project.projectID === value
     );
-    dispatch(setSelectProject(newSelectProject[0]));
+    dispatch(setSelectProject(newSelectProject[1]));
   };
 
 
