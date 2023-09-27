@@ -87,7 +87,7 @@ const ProjectBoard = () => {
       fetchCardData();
     }
   }, [selectedProject]);
-    console.log("PP   ",items[0])
+  
   const typeOptions = optionsType(projects)
 
   const assigneeOptions = optionsAssignee(assignees)
